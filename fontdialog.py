@@ -6,7 +6,7 @@ from PyQt5.QtGui import *
 class DlgMain(QDialog):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("My GUI")  # add widgets, set properties
+        self.setWindowTitle("My GUI")  # add widgets, set properties.
         self.resize(200, 200)
 
         self.btn = QPushButton("Choose Font", self)
