@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5.QtCore import *
-from PyQt5.QtGui import QFont, QPixmap
+from PyQt5.QtGui import QFont, QPixmap, QIcon
 from PyQt5.QtWidgets import *  # imports section
 
 
@@ -11,7 +11,8 @@ class DlgMain(QDialog):
         self.setWindowTitle("My GUI")  # add widgets, set properties.
         self.resize(200, 200)
 
-        self.btn = QPushButton("Change label", self)
+        self.btn = QPushButton("Disable label", self)
+        self.btn.setIcon(QIcon(QPixmap("photos/search.png")))
         self.btn.move(40, 40)
         self.btn.resize(120,50)
         self.btn.clicked.connect(self.evt_btn_clicked)
@@ -23,17 +24,16 @@ class DlgMain(QDialog):
         self.lbl.setFont(font)
 
     def evt_btn_clicked(self):
-        str = """
-        <h5>Header</h5>
-            <ul>
-                <li>Red</li>
-                <li>Blue</li>
-            </ul>
-        """
-        self.lbl.setText(str)
-        pxm = QPixmap("photos/bear.jpg").scaled(100,100)
-        self.lbl.setPixmap(pxm)
-        self.lbl.repaint()
+        if self.lbl.isEnabled():
+            self.lbl.setDisabled(True)
+            self.lbl.repaint()
+            self.lbl.setText("Enable")
+            self.lbl.repaint()
+        else:
+            self.lbl.setDisabled(False)
+            self.lbl.repaint()
+            self.lbl.setText("Disable")
+            self.lbl.repaint()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)  # create application
