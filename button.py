@@ -11,29 +11,38 @@ class DlgMain(QDialog):
         self.setWindowTitle("My GUI")  # add widgets, set properties.
         self.resize(200, 200)
 
-        self.btn = QPushButton("Disable label", self)
-        self.btn.setIcon(QIcon(QPixmap("photos/search.png")))
-        self.btn.move(40, 40)
-        self.btn.resize(120,50)
-        self.btn.clicked.connect(self.evt_btn_clicked)
+        self.chkEnabled = QCheckBox("Enabled", self)
+        self.chkEnabled.move(30,40)
+        self.chkEnabled.setChecked(True)
+        self.chkEnabled.toggled.connect(self.evt_chkEnabled_toggled)
+
+        self.chkTree = QCheckBox("Three State",self)
+        self.chkTree.move(30,70)
+        self.chkTree.setTristate(True)
+        self.chkTree.stateChanged.connect(self.evt_chkThree_changed)
 
         self.lbl = QLabel("Old Text", self)
         self.lbl.move(40, 100)
-        self.lbl.resize(100,100)
-        font = QFont("Times New Roman", 20,75,True)
+        self.lbl.resize(100, 100)
+        font = QFont("Times New Roman", 20, 75, True)
         self.lbl.setFont(font)
 
-    def evt_btn_clicked(self):
-        if self.lbl.isEnabled():
-            self.lbl.setDisabled(True)
-            self.lbl.repaint()
-            self.lbl.setText("Enable")
-            self.lbl.repaint()
+    def evt_chkThree_changed(self,state):
+        if state == 0:
+            QMessageBox.information(self, "State", "Unchecked")
+        elif state == 2:
+            QMessageBox.information(self, "State", "Checkd")
         else:
+            QMessageBox.information(self, "State", "Partially checked")
+
+
+    def evt_chkEnabled_toggled(self, chkd):
+        if chkd:
             self.lbl.setDisabled(False)
-            self.lbl.repaint()
-            self.lbl.setText("Disable")
-            self.lbl.repaint()
+        else:
+            self.lbl.setDisabled(True)
+
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)  # create application
